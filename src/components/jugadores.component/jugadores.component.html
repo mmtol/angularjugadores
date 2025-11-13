@@ -1,1 +1,27 @@
-<p>jugadores.component works!</p>
+<div>
+    <h1>JUGADORES</h1>
+    <h2>Jugadores que coinciden</h2>
+    <table class="table table-form">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Posicion</th>
+                <th>Imagen</th>
+                <th>Fecha nacimiento</th>
+                <th>Pais</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(jugador of jugadores; track jugador)
+            {
+                <tr>
+                    <td>{{jugador.nombre}}</td>
+                    <td>{{jugador.posicion}}</td>
+                    <td><img src={{jugador.imagen}}/></td>
+                    <td>{{jugador.fechaNacimiento}}</td>
+                    <td>{{jugador.pais}}</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
