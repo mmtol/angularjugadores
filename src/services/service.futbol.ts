@@ -1,6 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "../environments/environment.development";
+import { forkJoin } from "rxjs";
+import { DatosEquipo } from "../models/DatosEquipo";
 
 @Injectable()
 export default class ServiceFutbol
@@ -11,6 +13,21 @@ export default class ServiceFutbol
     {
         let url = environment.futbol;
         let endPoint = "api/Equipos";
+        let promise = new Promise((resolve) =>
+        {
+            this._http.get(url+endPoint).subscribe(response =>
+            {
+                resolve(response);
+            })
+        })
+
+        return promise;
+    }
+
+    findJugadores(nombre:string):Promise<any>
+    {
+        let url = environment.futbol;
+        let endPoint = "api/Jugadores/BuscarJugadores/"+nombre;
         let promise = new Promise((resolve) =>
         {
             this._http.get(url+endPoint).subscribe(response =>
@@ -52,18 +69,23 @@ export default class ServiceFutbol
         return promise;
     }
 
-    findJugadores(nombre:string):Promise<any>
+    getDatosEquipo(idEquipo:number):Promise<any>
     {
-        let url = environment.futbol;
-        let endPoint = "api/Jugadores/BuscarJugadores/"+nombre;
-        let promise = new Promise((resolve) =>
+        let promise = new Promise((resolve) => 
         {
-            this._http.get(url+endPoint).subscribe(response =>
+            Promise.all
+            ([
+                this.findEquipo(idEquipo),
+                this.getJugadoresEquipo(idEquipo)
+            ]).then(([equipo, jugadores]) => 
             {
-                resolve(response);
-            })
-        })
+                let datos = new DatosEquipo();
+                datos.equipo = equipo;
+                datos.jugadores = jugadores;
+                resolve(datos);
+            });
+        });
 
-        return promise;
+    return promise;
     }
 }
