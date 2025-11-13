@@ -57,7 +57,7 @@ export default class ServiceFutbol
     getJugadoresEquipo(idEquipo:number):Promise<any>
     {
         let url = environment.futbol;
-        let endPoint = "api/Jugadores/JugadoresEquipo/"+idEquipo;
+        let endPoint = "api/Jugadores/JugadoresEquipos/"+idEquipo;
         let promise = new Promise((resolve) =>
         {
             this._http.get(url+endPoint).subscribe(response =>

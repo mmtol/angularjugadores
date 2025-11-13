@@ -1,13 +1,39 @@
 <div>
     <h1>EQUIPO Y JUGADORES</h1>
-    <div align="left">
-        <h2>EQUIPO</h2>
-        <table class="table table-form">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
+    @if(datos)
+    {
+        <div align="center">
+            <h2>EQUIPO</h2>
+            <h3>{{datos.equipo.nombre}}</h3>
+            <h3>Champions: {{datos.equipo.champions}}</h3>
+            <h3>Finalista: {{datos.equipo.finalista}}</h3>
+            <h3><img src={{datos.equipo.imagen}}/></h3>
+        </div>
+        <div align="center">
+            <h2>JUGADORES</h2>
+            <table class="table table-form">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Posicion</th>
+                        <th>Imagen</th>
+                        <th>Fecha nacimiento</th>
+                        <th>Pais</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(jugador of datos.jugadores; track jugador)
+                    {
+                        <tr>
+                            <td>{{jugador.nombre}}</td>
+                            <td>{{jugador.posicion}}</td>
+                            <td><img src={{jugador.imagen}}/></td>
+                            <td>{{jugador.fechaNacimiento}}</td>
+                            <td>{{jugador.pais}}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 </div>
